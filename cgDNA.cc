@@ -164,13 +164,12 @@ bool getInputWithFlag(int argc, char **argv, char flag, string *value) {
   bool bopt = false;
   char gopt[2] = { flag, ':' };
 
-  for(int i=1; i < argc; i++) {
+  for(int i=1; i < argc && !bopt; i++) {
     if(argv[i][0] == '-' && argv[i][1] == flag) {
       if(argv[i+1][0] != '-') {
         *value = argv[i+1];
         bopt = true;
         i++;
-        break;
       }
     }
   }
