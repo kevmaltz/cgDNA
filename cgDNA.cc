@@ -159,14 +159,21 @@ void parsePDB(string *pdbFilename) {
 }
 
 
-bool getInputWithFlag(int argc, char **argv, char flag, string *value) {
-  int  opt;                                                                                                                                                                                                     
-  bool bopt = false;
-  char gopt[2] = { flag, ':' };
+bool getInputWithFlag( int argc, char **argv, //system arguments prog called
+                       char flag,             //flag used to indicate filename
+                       string *value)         //pointer to filename variable
+{
+  bool bopt = false;                //is proper input flag entered?
+  //Not sure what these to do, however no longer used in function. 9-12-2017
+  //  int opt;
+  //  char gopt[2] = { flag, ':' };
 
-  for(int i=1; i < argc && !bopt; i++) {
-    if(argv[i][0] == '-' && argv[i][1] == flag) {
-      if(argv[i+1][0] != '-') {
+  for(int i=1; i < argc; i++) 
+  {
+    if(argv[i][0] == '-' && argv[i][1] == flag) 
+    {
+      if(argv[i+1][0] != '-') 
+      {
         *value = argv[i+1];
         bopt = true;
         i++;
@@ -178,12 +185,16 @@ bool getInputWithFlag(int argc, char **argv, char flag, string *value) {
 }
 
 
-int main(int argc, char **argv) {
-  string pfn, ofn;
+int main(int argc, char **argv)
+{
+  string pfn;           //filename of PDB to be parsed and converted to PQR
+  string ofn;           //
 
   // Parse command line arguments
-  if(argc < 1) helpExit();
-  if(! getInputWithFlag(argc, argv, 'p', &pfn)) helpExit();
+  if(argc < 1)
+      helpExit();
+  if(! getInputWithFlag(argc, argv, 'p', &pfn))
+      helpExit();
 
   // Parse the PDB file
   parsePDB(&pfn);
