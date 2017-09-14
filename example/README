@@ -1,0 +1,8 @@
+Glucose oxidase (GOx, pdb:1GPE chain A) and Horseradish peroxidase (HRP, pdb:1ATJ chain A)
+proteins structures are provided as examples. To convert these all-atom structures to 
+one-bead-per-residue structures, use the following commands:
+
+../cgProtein -p GOxa.pdb > GOx.rbbd
+../cgProtein -p HRPa.pdb > HRP.rbbd
+
+The new ".rbbd" files contain a coarse grained, rigid body description of each protein.
