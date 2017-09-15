@@ -26,18 +26,22 @@ void parsePDB(string *pdbFilename) {
 
   ifstream fd(pdbFilename->c_str());
 
-  while(getline(fd, buffer)) {
-    if(buffer.compare(0, 4, "ATOM") == 0) {
+  while(getline(fd, buffer)) 
+  {
+    if(buffer.compare(0, 4, "ATOM") == 0)                     //if the first word on the line is ATOM 
+    {
       bool printBead = false;
-      atomtype = buffer.substr(13, 3);
-      atomtype = trim(atomtype);
-
-      if(stoi(buffer.substr(25,1)) != resid) {
-        resid = stoi(buffer.substr(25,1));
-        basetype = buffer[18];
-        sugcoords[0] = sugcoords[1] = sugcoords[2] = 0.;
+      atomtype = buffer.substr(13, 3);                        //grabs and stores atom type stored in column 3 of a PDB. May need to adjust to (12,4) but need
+                                                              //to check how trim works first. This is because some PDB have 4 char atomtypes.
+      atomtype = trim(atomtype);                              //trims off everything but periodic symbol of atom, I think -9/14/17 @ 18:54
+      
+      if(stoi(buffer.substr(25,1)) != resid)                  //checks 6th column to see if we have moved on to the next residue in the molecule yet 
+      {
+        resid = stoi(buffer.substr(25,1));                    //set resid to the now current resid number
+        basetype = buffer[18];                                //grab the letter of the base: A, G, T, C
+        sugcoords[0] = sugcoords[1] = sugcoords[2] = 0.;      //Reset suger coordinates to default
         sugcount = 0;
-        basecoords[0] = basecoords[1] = basecoords[2] = 0.;
+        basecoords[0] = basecoords[1] = basecoords[2] = 0.;   //Reset base coordinates to default
         basecount = 0;
       }
 
